@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".CalendarYear2LunarYearActivity">
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#403030"
+        android:text="Calendar Year to Lunar Year"
+        android:textAlignment="center"
+        android:textColor="#FFC107"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Calendar Year:"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/edtCalendarYear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number" />
+
+    <Button
+        android:id="@+id/btnLunarYear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lunar Year" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Luanr Year:"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/txtLunarYear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F6BCBC"
+        android:textColor="#9C27B0"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/imgReturn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:srcCompat="@mipmap/ic_return" />
+
+</LinearLayout>
