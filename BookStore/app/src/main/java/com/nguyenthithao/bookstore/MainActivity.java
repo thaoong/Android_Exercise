@@ -23,4 +23,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent=new Intent(MainActivity.this, EventHandlingActivity.class);
         startActivity(intent);
     }
+
+    public void openNotificationActivity(View view) {
+        Intent intent=new Intent(MainActivity.this, NotificationActivity.class);
+        startActivity(intent);
+    }
 }

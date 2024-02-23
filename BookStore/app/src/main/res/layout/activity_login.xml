@@ -90,4 +90,10 @@
 
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/imgFooter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_man" />
+
 </LinearLayout>
