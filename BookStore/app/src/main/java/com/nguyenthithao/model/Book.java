@@ -1,9 +1,45 @@
 package com.nguyenthithao.model;
 
-public class Book {
+import java.io.Serializable;
+
+public class Book implements Serializable {
     private String bookID;
     private String bookName;
     private float unitPrice;
+    private int imageID;
+    private Publisher publisher;
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getImageID() {
+        return imageID;
+    }
+
+    public void setImageID(int imageID) {
+        this.imageID = imageID;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
+
+    public Book (String bookID, String bookName, float unitPrice, int imageID) {
+        this.bookID = bookID;
+        this.bookName = bookName;
+        this.unitPrice = unitPrice;
+        this.imageID = imageID;
+    }
 
     public Book() {
     }

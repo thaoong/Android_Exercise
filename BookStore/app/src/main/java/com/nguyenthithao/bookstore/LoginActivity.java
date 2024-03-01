@@ -1,5 +1,6 @@
 package com.nguyenthithao.bookstore;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,23 +8,32 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
-
     EditText edtUserName;
     EditText edtPassword;
 
     TextView txtMessage;
     ImageView imgFooter;
     int count_exit = 0;
-    Dialog dialog;
+    Dialog dialog=null;
 
+    ImageView imgLogo;
+    SharedPreferences sharedPreferences;
+    String Key_Preference = "LOGIN_PREFERENCE";
+    CheckBox chkSaveLoginInfor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +80,10 @@ public class LoginActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
+
+        imgLogo = findViewById(R.id.imgLogo);
+        registerForContextMenu(imgLogo);
+        chkSaveLoginInfor=findViewById(R.id.chkSaveInfo);
     }
 
     public void exitApp(View view) {
@@ -115,9 +129,16 @@ public class LoginActivity extends AppCompatActivity {
 //            Intent intent=new Intent(LoginActivity.this, MainActivity.class);
 //            Intent intent=new Intent(LoginActivity.this, SimpleListBookActivity.class);
 //            Intent intent=new Intent(LoginActivity.this, SimpleListBookObjectActivity.class);
-            Intent intent=new Intent(LoginActivity.this, AdvancedListBookObjectActivity.class);
+//            Intent intent=new Intent(LoginActivity.this, AdvancedListBookObjectActivity.class);
+            Intent intent=new Intent(LoginActivity.this, PublisherBookActivity.class);
             startActivity(intent);
             Toast.makeText(LoginActivity.this, "Log in successfull!", Toast.LENGTH_SHORT).show();
+            sharedPreferences=getSharedPreferences(Key_Preference, MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("USER_NAME", userName);
+            editor.putString("PASSWORD", pwd);
+            editor.putBoolean("SAVED", chkSaveLoginInfor.isChecked());
+            editor.commit();
         }
         else
         {
@@ -136,5 +157,35 @@ public class LoginActivity extends AppCompatActivity {
             confirmExit();
             count_exit=0;
         }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.contextmenu_logo, menu);
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId()==R.id.mnuUpdateNewVersion)
+        {
+
+        } else if (item.getItemId()==R.id.mnuSharing) {
+            
+        } else if (item.getItemId()==R.id.mnuDialUpCall) {
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            Uri uri = Uri.parse("tel:0374328977");
+            intent.setData(uri);
+            startActivity(intent);
+        }
+        else if (item.getItemId()==R.id.mnuDirectCall) {
+            //theem confirm call permission tujw ddoonjg
+            Intent intent = new Intent(Intent.ACTION_CALL);
+            Uri uri = Uri.parse("tel:0374328977");
+            intent.setData(uri);
+            startActivity(intent);
+        }
+        return super.onContextItemSelected(item);
     }
 }
