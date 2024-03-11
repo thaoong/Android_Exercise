@@ -21,6 +21,15 @@
         android:theme="@style/Theme.BookStore"
         tools:targetApi="31">
         <activity
+            android:name=".PublisherBookSqliteCRUDActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.nguyenthithao.PublisherBookSqliteCRUDActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PublisherBookSqliteActivity"
+            android:exported="false" />
+        <activity
             android:name=".FeedBackActivity"
             android:exported="false" />
         <activity

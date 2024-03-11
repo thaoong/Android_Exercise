@@ -6,6 +6,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -34,6 +35,13 @@ public class PublisherBookActivity extends AppCompatActivity {
         addViews();
         makeFakeData();
         addEvents();
+        readUserActionLog();
+    }
+
+    private void readUserActionLog() {
+        SharedPreferences preferences = getSharedPreferences("USER_ACTION", MODE_PRIVATE);
+        int spinner_index = preferences.getInt("SPINNER_INDEX", 0);
+        spinnerPublisher.setSelection(spinner_index);
     }
 
     private void addEvents() {
@@ -43,6 +51,11 @@ public class PublisherBookActivity extends AppCompatActivity {
                 Publisher selectedPublisher=publisherAdapter.getItem(position);
                 advancedBookAdapter.clear();
                 advancedBookAdapter.addAll(selectedPublisher.getBooks());
+
+                SharedPreferences preferences = getSharedPreferences("USER_ACTION", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putInt("SPINNER_INDEX", position);
+                editor.commit();
             }
 
             @Override
@@ -137,22 +150,23 @@ public class PublisherBookActivity extends AppCompatActivity {
         inflater.inflate(R.menu.menu_book, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId()==R.id.mnuFeedBack){
+        if(item.getItemId()==R.id.mnuFeedBack)
+        {
             Intent intent = new Intent(PublisherBookActivity.this, FeedBackActivity.class);
             startActivityForResult(intent,1);
-
         }
-        else if (item.getItemId()==R.id.mnuHelp) {
-            String url = "https://myuel.uel.edu.vn/";
+        else if(item.getItemId()==R.id.mnuHelp)
+        {
+            String url = "https://lms.uel.edu.vn/?redirect=0";
             Intent intent = new Intent(Intent.ACTION_VIEW);
             Uri uri = Uri.parse(url);
             intent.setData(uri);
             startActivity(intent);
         }
-        else if (item.getItemId()==R.id.mnuAbout) {
+        else if(item.getItemId()==R.id.mnuAbout)
+        {
 
         }
         return super.onOptionsItemSelected(item);
@@ -161,10 +175,9 @@ public class PublisherBookActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode==2 && requestCode==1)
-        {
-            String content=data.getStringExtra("CONTENT_FEEDBACK");
-            AlertDialog.Builder builder = new AlertDialog.Builder(PublisherBookActivity.this);
+        if (resultCode==2 && requestCode==1){
+            String content = data.getStringExtra("CONTENT_FEEDBACK");
+            AlertDialog.Builder builder=new AlertDialog.Builder(PublisherBookActivity.this);
             builder.setTitle("Feedback");
             builder.setMessage(content);
             builder.create().show();

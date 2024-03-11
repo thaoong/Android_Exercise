@@ -9,8 +9,10 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,19 +23,64 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 public class LoginActivity extends AppCompatActivity {
     EditText edtUserName;
     EditText edtPassword;
-
     TextView txtMessage;
     ImageView imgFooter;
     int count_exit = 0;
     Dialog dialog=null;
-
     ImageView imgLogo;
     SharedPreferences sharedPreferences;
     String Key_Preference = "LOGIN_PREFERENCE";
     CheckBox chkSaveLoginInfor;
+    public static final String DATABASE_NAME = "BookStore.sqlite";
+    public static final String DB_PATH_SUFFIX = "/databases/";
+    public static SQLiteDatabase database = null;
+
+    private void copyDataBase(){
+        try{
+            File dbFile = getDatabasePath(DATABASE_NAME);
+            if(!dbFile.exists()){
+                if(CopyDBFromAsset()){
+                    Toast.makeText(LoginActivity.this,
+                            "Copy database successful!", Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(LoginActivity.this,
+                            "Copy database fail!", Toast.LENGTH_LONG).show();
+                }
+            }
+        }catch (Exception e){
+            Log.e("Error: ", e.toString());
+        }
+    }
+
+    private boolean CopyDBFromAsset() {
+        String dbPath = getApplicationInfo().dataDir + DB_PATH_SUFFIX + DATABASE_NAME;
+        try {
+            InputStream inputStream = getAssets().open(DATABASE_NAME);
+            File f = new File(getApplicationInfo().dataDir + DB_PATH_SUFFIX);
+            if(!f.exists()){
+                f.mkdir();
+            }
+            OutputStream outputStream = new FileOutputStream(dbPath);
+            byte[] buffer = new byte[1024]; int length;
+            while((length=inputStream.read(buffer))>0){
+                outputStream.write(buffer,0, length);
+            }
+            outputStream.flush();  outputStream.close(); inputStream.close();
+            return  true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +88,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         addViews();
         addEvents();
+        readLoginInformation();
+        copyDataBase();
     }
 
     private void addEvents() {
@@ -130,7 +179,10 @@ public class LoginActivity extends AppCompatActivity {
 //            Intent intent=new Intent(LoginActivity.this, SimpleListBookActivity.class);
 //            Intent intent=new Intent(LoginActivity.this, SimpleListBookObjectActivity.class);
 //            Intent intent=new Intent(LoginActivity.this, AdvancedListBookObjectActivity.class);
-            Intent intent=new Intent(LoginActivity.this, PublisherBookActivity.class);
+//            Intent intent=new Intent(LoginActivity.this, PublisherBookActivity.class);
+//            Intent intent=new Intent(LoginActivity.this, PublisherBookSqliteActivity.class);
+            Intent intent=new Intent(LoginActivity.this, PublisherBookSqliteCRUDActivity.class);
+
             startActivity(intent);
             Toast.makeText(LoginActivity.this, "Log in successfull!", Toast.LENGTH_SHORT).show();
             sharedPreferences=getSharedPreferences(Key_Preference, MODE_PRIVATE);
@@ -146,6 +198,24 @@ public class LoginActivity extends AppCompatActivity {
             txtMessage.setText("Login failed, please check your account again");
             Toast.makeText(LoginActivity.this, "Log in failed!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    void readLoginInformation()
+    {
+        sharedPreferences=getSharedPreferences(Key_Preference, MODE_PRIVATE);
+        String userName = sharedPreferences.getString("USER_NAME", "");
+        String pwd = sharedPreferences.getString("PASSWORD", "");
+        boolean saved = sharedPreferences.getBoolean("SAVED", false);
+        if (saved)
+        {
+            edtUserName.setText(userName);
+            edtPassword.setText(pwd);
+        }
+        else {
+            edtUserName.setText("");
+            edtPassword.setText("");
+        }
+        chkSaveLoginInfor.setChecked(saved);
     }
 
     @SuppressLint("MissingSuperCall")
