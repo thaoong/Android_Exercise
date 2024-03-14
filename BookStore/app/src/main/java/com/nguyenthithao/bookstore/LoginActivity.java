@@ -9,7 +9,10 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.AssetFileDescriptor;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +25,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.nguyenthithao.model.Account;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -40,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     String Key_Preference = "LOGIN_PREFERENCE";
     CheckBox chkSaveLoginInfor;
+    MediaPlayer mediaPlayer;
     public static final String DATABASE_NAME = "BookStore.sqlite";
     public static final String DB_PATH_SUFFIX = "/databases/";
     public static SQLiteDatabase database = null;
@@ -90,6 +96,17 @@ public class LoginActivity extends AppCompatActivity {
         addEvents();
         readLoginInformation();
         copyDataBase();
+
+        // Tạo audio
+        mediaPlayer = new MediaPlayer();
+        try {
+            AssetFileDescriptor afd = getAssets().openFd("sound.mp3");
+            mediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+            mediaPlayer.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        mediaPlayer.start();
     }
 
     private void addEvents() {
@@ -173,7 +190,8 @@ public class LoginActivity extends AppCompatActivity {
 
         String userName=edtUserName.getText().toString();
         String pwd=edtPassword.getText().toString();
-        if (userName.equalsIgnoreCase("admin") && pwd.equals("123"))
+        //if (userName.equalsIgnoreCase("admin") && pwd.equals("123"))
+        if (loginSystem(userName, pwd)!=null)
         {
 //            Intent intent=new Intent(LoginActivity.this, MainActivity.class);
 //            Intent intent=new Intent(LoginActivity.this, SimpleListBookActivity.class);
@@ -181,7 +199,9 @@ public class LoginActivity extends AppCompatActivity {
 //            Intent intent=new Intent(LoginActivity.this, AdvancedListBookObjectActivity.class);
 //            Intent intent=new Intent(LoginActivity.this, PublisherBookActivity.class);
 //            Intent intent=new Intent(LoginActivity.this, PublisherBookSqliteActivity.class);
-            Intent intent=new Intent(LoginActivity.this, PublisherBookSqliteCRUDActivity.class);
+//            Intent intent=new Intent(LoginActivity.this, PublisherBookSqliteCRUDActivity.class);
+//            Intent intent=new Intent(LoginActivity.this, MyContactActivity.class);
+              Intent intent=new Intent(LoginActivity.this, MyContactAdvancedActivity.class);
 
             startActivity(intent);
             Toast.makeText(LoginActivity.this, "Log in successfull!", Toast.LENGTH_SHORT).show();
@@ -191,6 +211,11 @@ public class LoginActivity extends AppCompatActivity {
             editor.putString("PASSWORD", pwd);
             editor.putBoolean("SAVED", chkSaveLoginInfor.isChecked());
             editor.commit();
+
+            // Tắt nhạc khi đăng nhập thành công
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+            }
         }
         else
         {
@@ -238,7 +263,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId()==R.id.mnuUpdateNewVersion)
+        if (item.getItemId()==R.id.mnuUpdateNewVersion)
         {
 
         } else if (item.getItemId()==R.id.mnuSharing) {
@@ -257,5 +282,22 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         }
         return super.onContextItemSelected(item);
+    }
+
+    public Account loginSystem(String userName, String pwd)
+    {
+        database = openOrCreateDatabase(DATABASE_NAME, MODE_PRIVATE, null);
+        String sql = "select * from Account where UserName='"+userName+"' and PassWord='"+pwd+"'";
+        Cursor cursor=database.rawQuery(sql, null);
+        if (cursor.moveToNext())
+        {
+            String usn = cursor.getString(1);
+            String p = cursor.getString(2);
+            Account ac = new Account(usn, p);
+            cursor.close();
+            return ac;
+        }
+        cursor.close();
+        return null;
     }
 }

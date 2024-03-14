@@ -1,8 +1,11 @@
 package com.nguyenthithao.bookstore;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -49,6 +52,27 @@ public class PublisherBookSqliteCRUDActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+
+          //Display on book detail print
+//        lvBook.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Book selectedBook = advancedBookAdapter.getItem(position);
+//                Intent intent = new Intent(PublisherBookSqliteCRUDActivity.this, BookDetailsActivity.class);
+//                intent.putExtra("SELECTED_BOOK", selectedBook);
+//                startActivity(intent);
+//            }
+//        });
+
+        lvBook.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Book book = advancedBookAdapter.getItem(position);
+                edtBookId.setText(book.getBookID());
+                edtBookName.setText(book.getBookName());
+                edtUnitPrice.setText(book.getUnitPrice()+"");
             }
         });
     }
@@ -130,8 +154,49 @@ public class PublisherBookSqliteCRUDActivity extends AppCompatActivity {
     }
 
     public void processUpdate(View view) {
+        ContentValues record = new ContentValues();
+        record.put("bookName", edtBookName.getText().toString());
+        record.put("unitPrice", Float.parseFloat(edtUnitPrice.getText().toString()));
+        Publisher publisher = (Publisher) spinnerPublisher.getSelectedItem();
+        record.put("publisherID", publisher.getPublisherID());
+        String bookID = edtBookId.getText().toString();
+        long result = database.update("Book", record, "bookID=?", new String[]{bookID});
+        if (result>0){
+            loadBookByPublisher(publisher);
+        }
     }
 
-    public void processDelete(View view) {
+    public void processDelete(View view) {//Create builder object
+        AlertDialog.Builder builder=new AlertDialog.Builder(PublisherBookSqliteCRUDActivity.this);
+        //set title:
+        builder.setTitle("Confirm Delete");
+        //set message
+        builder.setMessage("Are you sure want to delete?");
+        //set icon
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        //set actions button for user interaction
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String bookID = edtBookId.getText().toString();
+                long result = database.delete("Book", "bookID=?", new String[]{bookID});
+                Publisher publisher = (Publisher) spinnerPublisher.getSelectedItem();
+                if (result >0){
+                    loadBookByPublisher(publisher);
+                    processNew(view);
+                }
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        //Create Dialog object;
+        AlertDialog dialog=builder.create();
+        dialog.setCanceledOnTouchOutside(false);
+        //Show dialog
+        dialog.show();
     }
 }

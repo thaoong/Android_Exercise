@@ -36,7 +36,9 @@ public class BookDetailsActivity extends AppCompatActivity {
          txtBookId.setText(selectedBook.getBookID());
          txtBookName.setText(selectedBook.getBookName());
          txtUnitPrice.setText(selectedBook.getUnitPrice()+"");
-         // cuz description is a html format
+//       txtDescription.setText(selectedBook.getDescription());
+
+            // cuz description is a html format
          Spanned spannedDescription = Html.fromHtml(selectedBook.getDescription(), 1);
          txtDescription.setText(spannedDescription);
 
