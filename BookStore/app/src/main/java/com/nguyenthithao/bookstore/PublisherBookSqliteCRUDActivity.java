@@ -1,5 +1,6 @@
 package com.nguyenthithao.bookstore;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +10,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -126,11 +130,11 @@ public class PublisherBookSqliteCRUDActivity extends AppCompatActivity {
         publisherAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerPublisher.setAdapter(publisherAdapter);
 
-        lvBook=findViewById(R.id.lvBook);
+        lvBook=findViewById(R.id.lvPublisher);
         advancedBookAdapter=new AdvancedBookAdapter(PublisherBookSqliteCRUDActivity.this, R.layout.advanced_book_item);
         lvBook.setAdapter(advancedBookAdapter);
-        edtBookId = findViewById(R.id.edtBookId);
-        edtBookName = findViewById(R.id.edtBookName);
+        edtBookId = findViewById(R.id.edtPublisherId);
+        edtBookName = findViewById(R.id.edtPublisherName);
         edtUnitPrice = findViewById(R.id.edtUnitPrice);
     }
 
@@ -199,4 +203,22 @@ public class PublisherBookSqliteCRUDActivity extends AppCompatActivity {
         //Show dialog
         dialog.show();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.menu_publisher, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId()==R.id.mnuPublisherSetting)
+        {
+            Intent intent = new Intent(PublisherBookSqliteCRUDActivity.this, PublisherCRUDActivity.class);
+            startActivityForResult(intent,1);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

@@ -8,7 +8,7 @@
     tools:context=".SimpleListBookActivity">
 
     <ListView
-        android:id="@+id/lvBook"
+        android:id="@+id/lvPublisher"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:listSelector="@color/design_default_color_secondary" />

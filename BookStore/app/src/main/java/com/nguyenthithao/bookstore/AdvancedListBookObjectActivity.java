@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -98,12 +97,12 @@ public class AdvancedListBookObjectActivity extends AppCompatActivity {
 
     private void addViews() {
         edtBookID = findViewById(R.id.edtBookID);
-        edtBookName = findViewById(R.id.edtBookName);
+        edtBookName = findViewById(R.id.edtPublisherName);
         edtUnitPrice = findViewById(R.id.edtUnitPrice);
         btnInsert = findViewById(R.id.btnInsert);
         btnUpdate = findViewById(R.id.btnUpdate);
         btnDelete = findViewById(R.id.btnDelete);
-        lvBook = findViewById(R.id.lvBook);
+        lvBook = findViewById(R.id.lvPublisher);
 //        bookAdapter = new ArrayAdapter<>(AdvancedListBookObjectActivity.this, android.R.layout.simple_list_item_1);
         bookAdapter = new BookAdapter(AdvancedListBookObjectActivity.this, R.layout.book_item);
         lvBook.setAdapter(bookAdapter);

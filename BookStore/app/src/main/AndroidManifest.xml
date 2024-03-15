@@ -26,6 +26,9 @@
         android:theme="@style/Theme.BookStore"
         tools:targetApi="31">
         <activity
+            android:name=".PublisherCRUDActivity"
+            android:exported="false" />
+        <activity
             android:name=".MySMSAdvancedActivity"
             android:exported="false" />
         <activity

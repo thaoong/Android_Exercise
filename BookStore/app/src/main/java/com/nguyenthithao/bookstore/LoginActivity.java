@@ -199,9 +199,9 @@ public class LoginActivity extends AppCompatActivity {
 //            Intent intent=new Intent(LoginActivity.this, AdvancedListBookObjectActivity.class);
 //            Intent intent=new Intent(LoginActivity.this, PublisherBookActivity.class);
 //            Intent intent=new Intent(LoginActivity.this, PublisherBookSqliteActivity.class);
-//            Intent intent=new Intent(LoginActivity.this, PublisherBookSqliteCRUDActivity.class);
+            Intent intent=new Intent(LoginActivity.this, PublisherBookSqliteCRUDActivity.class);
 //            Intent intent=new Intent(LoginActivity.this, MyContactActivity.class);
-              Intent intent=new Intent(LoginActivity.this, MyContactAdvancedActivity.class);
+//              Intent intent=new Intent(LoginActivity.this, MyContactAdvancedActivity.class);
 
             startActivity(intent);
             Toast.makeText(LoginActivity.this, "Log in successfull!", Toast.LENGTH_SHORT).show();

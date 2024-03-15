@@ -99,7 +99,7 @@ public class PublisherBookSqliteActivity extends AppCompatActivity {
         publisherAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerPublisher.setAdapter(publisherAdapter);
 
-        lvBook=findViewById(R.id.lvBook);
+        lvBook=findViewById(R.id.lvPublisher);
         advancedBookAdapter=new AdvancedBookAdapter(PublisherBookSqliteActivity.this, R.layout.advanced_book_item);
         lvBook.setAdapter(advancedBookAdapter);
     }

@@ -139,7 +139,7 @@ public class PublisherBookActivity extends AppCompatActivity {
         publisherAdapter=new ArrayAdapter<>(PublisherBookActivity.this, android.R.layout.simple_spinner_item);
         publisherAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerPublisher.setAdapter(publisherAdapter);
-        lvBook=findViewById(R.id.lvBook);
+        lvBook=findViewById(R.id.lvPublisher);
         advancedBookAdapter=new AdvancedBookAdapter(PublisherBookActivity.this, R.layout.advanced_book_item);
         lvBook.setAdapter(advancedBookAdapter);
     }
