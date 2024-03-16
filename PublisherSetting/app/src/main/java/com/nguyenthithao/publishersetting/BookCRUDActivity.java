@@ -1,4 +1,4 @@
-package com.nguyenthithao.bookstore;
+package com.nguyenthithao.publishersetting;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,14 +20,20 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.nguyenthithao.adapter.AdvancedBookAdapter;
 import com.nguyenthithao.model.Book;
 import com.nguyenthithao.model.Publisher;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
-public class PublisherBookSqliteCRUDActivity extends AppCompatActivity {
+public class BookCRUDActivity extends AppCompatActivity {
     Spinner spinnerPublisher;
     ArrayAdapter<Publisher> publisherAdapter;
     public static final String DATABASE_NAME = "BookStore.sqlite";
@@ -36,13 +43,52 @@ public class PublisherBookSqliteCRUDActivity extends AppCompatActivity {
     AdvancedBookAdapter advancedBookAdapter;
     EditText edtBookId, edtBookName, edtUnitPrice;
 
+    private void copyDataBase(){
+        try{
+            File dbFile = getDatabasePath(DATABASE_NAME);
+            if(!dbFile.exists()){
+                if(CopyDBFromAsset()){
+                    Toast.makeText(BookCRUDActivity.this,
+                            "Copy database successful!", Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(BookCRUDActivity.this,
+                            "Copy database fail!", Toast.LENGTH_LONG).show();
+                }
+            }
+        }catch (Exception e){
+            Log.e("Error: ", e.toString());
+        }
+    }
+
+    private boolean CopyDBFromAsset() {
+        String dbPath = getApplicationInfo().dataDir + DB_PATH_SUFFIX + DATABASE_NAME;
+        try {
+            InputStream inputStream = getAssets().open(DATABASE_NAME);
+            File f = new File(getApplicationInfo().dataDir + DB_PATH_SUFFIX);
+            if(!f.exists()){
+                f.mkdir();
+            }
+            OutputStream outputStream = new FileOutputStream(dbPath);
+            byte[] buffer = new byte[1024]; int length;
+            while((length=inputStream.read(buffer))>0){
+                outputStream.write(buffer,0, length);
+            }
+            outputStream.flush();  outputStream.close(); inputStream.close();
+            return  true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_publisher_book_sqlite_crud);
+        setContentView(R.layout.activity_book_crud);
         addViews();
         loadPublisher();
         addEvents();
+        copyDataBase();
     }
 
     private void addEvents() {
@@ -59,7 +105,7 @@ public class PublisherBookSqliteCRUDActivity extends AppCompatActivity {
             }
         });
 
-          //Display on book detail print
+        //Display on book detail print
 //        lvBook.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -85,7 +131,7 @@ public class PublisherBookSqliteCRUDActivity extends AppCompatActivity {
         // Remember
         // (1) 1 Publisher has many books
         // (2) 1 Book belongs to a Publisher
-        ArrayList<Book>books = new ArrayList<>();
+        ArrayList<Book> books = new ArrayList<>();
         String sql = "SELECT * FROM Book WHERE publisherID='"+selectedPublisher.getPublisherID()+"'";
         database = openOrCreateDatabase(DATABASE_NAME,
                 MODE_PRIVATE, null);
@@ -126,12 +172,12 @@ public class PublisherBookSqliteCRUDActivity extends AppCompatActivity {
 
     private void addViews() {
         spinnerPublisher=findViewById(R.id.spinnerPublisher);
-        publisherAdapter=new ArrayAdapter<>(PublisherBookSqliteCRUDActivity.this, android.R.layout.simple_spinner_item);
+        publisherAdapter=new ArrayAdapter<>(BookCRUDActivity.this, android.R.layout.simple_spinner_item);
         publisherAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerPublisher.setAdapter(publisherAdapter);
 
         lvBook=findViewById(R.id.lvPublisher);
-        advancedBookAdapter=new AdvancedBookAdapter(PublisherBookSqliteCRUDActivity.this, R.layout.advanced_book_item);
+        advancedBookAdapter=new AdvancedBookAdapter(BookCRUDActivity.this, R.layout.book_item);
         lvBook.setAdapter(advancedBookAdapter);
         edtBookId = findViewById(R.id.edtPublisherId);
         edtBookName = findViewById(R.id.edtPublisherName);
@@ -171,7 +217,7 @@ public class PublisherBookSqliteCRUDActivity extends AppCompatActivity {
     }
 
     public void processDelete(View view) {//Create builder object
-        AlertDialog.Builder builder=new AlertDialog.Builder(PublisherBookSqliteCRUDActivity.this);
+        AlertDialog.Builder builder=new AlertDialog.Builder(BookCRUDActivity.this);
         //set title:
         builder.setTitle("Confirm Delete");
         //set message
@@ -215,7 +261,7 @@ public class PublisherBookSqliteCRUDActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId()==R.id.mnuPublisherSetting)
         {
-            Intent intent = new Intent(PublisherBookSqliteCRUDActivity.this, PublisherCRUDActivity.class);
+            Intent intent = new Intent(BookCRUDActivity.this, PublisherCRUDActivity.class);
             startActivityForResult(intent,1);
         }
         return super.onOptionsItemSelected(item);
