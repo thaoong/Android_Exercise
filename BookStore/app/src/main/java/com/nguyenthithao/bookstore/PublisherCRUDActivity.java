@@ -15,7 +15,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.nguyenthithao.adapter.PublisherAdapter;
-import com.nguyenthithao.model.Book;
 import com.nguyenthithao.model.Publisher;
 
 import java.util.ArrayList;
@@ -139,9 +138,9 @@ public class PublisherCRUDActivity extends AppCompatActivity {
     }
 
     private void addViews() {
-        edtPublisherId = findViewById(R.id.edtPublisherId);
-        edtPublisherName = findViewById(R.id.edtPublisherName);
-        lvPublisher = findViewById(R.id.lvPublisher);
+        edtPublisherId = findViewById(R.id.edtBookId);
+        edtPublisherName = findViewById(R.id.edtBookName);
+        lvPublisher = findViewById(R.id.lvBook);
         publisherAdapter = new PublisherAdapter(PublisherCRUDActivity.this, R.layout.publishers_item);
         lvPublisher.setAdapter(publisherAdapter);
     }

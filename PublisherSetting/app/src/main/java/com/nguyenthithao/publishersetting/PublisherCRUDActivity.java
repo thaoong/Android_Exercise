@@ -138,9 +138,9 @@ public class PublisherCRUDActivity extends AppCompatActivity {
     }
 
     private void addViews() {
-        edtPublisherId = findViewById(R.id.edtPublisherId);
-        edtPublisherName = findViewById(R.id.edtPublisherName);
-        lvPublisher = findViewById(R.id.lvPublisher);
+        edtPublisherId = findViewById(R.id.edtBookId);
+        edtPublisherName = findViewById(R.id.edtBookName);
+        lvPublisher = findViewById(R.id.lvBook);
         publisherAdapter = new PublisherAdapter(PublisherCRUDActivity.this, R.layout.publisher_item);
         lvPublisher.setAdapter(publisherAdapter);
     }

@@ -14,7 +14,7 @@
         android:text="Book Id:" />
 
     <EditText
-        android:id="@+id/edtPublisherId"
+        android:id="@+id/edtBookId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -27,7 +27,7 @@
         android:text="Book Name:" />
 
     <EditText
-        android:id="@+id/edtPublisherName"
+        android:id="@+id/edtBookName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -100,7 +100,7 @@
         android:text="List Books:" />
 
     <ListView
-        android:id="@+id/lvPublisher"
+        android:id="@+id/lvBook"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:listSelector="@color/design_default_color_secondary" />

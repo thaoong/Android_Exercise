@@ -97,12 +97,12 @@ public class AdvancedListBookObjectActivity extends AppCompatActivity {
 
     private void addViews() {
         edtBookID = findViewById(R.id.edtBookID);
-        edtBookName = findViewById(R.id.edtPublisherName);
+        edtBookName = findViewById(R.id.edtBookName);
         edtUnitPrice = findViewById(R.id.edtUnitPrice);
         btnInsert = findViewById(R.id.btnInsert);
         btnUpdate = findViewById(R.id.btnUpdate);
         btnDelete = findViewById(R.id.btnDelete);
-        lvBook = findViewById(R.id.lvPublisher);
+        lvBook = findViewById(R.id.lvBook);
 //        bookAdapter = new ArrayAdapter<>(AdvancedListBookObjectActivity.this, android.R.layout.simple_list_item_1);
         bookAdapter = new BookAdapter(AdvancedListBookObjectActivity.this, R.layout.book_item);
         lvBook.setAdapter(bookAdapter);

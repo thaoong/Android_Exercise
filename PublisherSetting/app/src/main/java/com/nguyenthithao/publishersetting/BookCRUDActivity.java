@@ -176,11 +176,11 @@ public class BookCRUDActivity extends AppCompatActivity {
         publisherAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerPublisher.setAdapter(publisherAdapter);
 
-        lvBook=findViewById(R.id.lvPublisher);
+        lvBook=findViewById(R.id.lvBook);
         advancedBookAdapter=new AdvancedBookAdapter(BookCRUDActivity.this, R.layout.book_item);
         lvBook.setAdapter(advancedBookAdapter);
-        edtBookId = findViewById(R.id.edtPublisherId);
-        edtBookName = findViewById(R.id.edtPublisherName);
+        edtBookId = findViewById(R.id.edtBookId);
+        edtBookName = findViewById(R.id.edtBookName);
         edtUnitPrice = findViewById(R.id.edtUnitPrice);
     }
 

@@ -27,7 +27,7 @@ public class SimpleListBookActivity extends AppCompatActivity {
     }
 
     private void addViews() {
-        lvBook = findViewById(R.id.lvPublisher);
+        lvBook = findViewById(R.id.lvBook);
         bookAdapter = new ArrayAdapter<>(SimpleListBookActivity.this, android.R.layout.simple_list_item_1);
         lvBook.setAdapter(bookAdapter);
     }
