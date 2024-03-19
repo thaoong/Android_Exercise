@@ -1,5 +1,7 @@
 package com.nguyenthithao.model;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
 public class MyContact implements Serializable {
@@ -29,4 +31,11 @@ public class MyContact implements Serializable {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return this.contactName+"\n"+this.phoneNumber;
+    }
 }
+

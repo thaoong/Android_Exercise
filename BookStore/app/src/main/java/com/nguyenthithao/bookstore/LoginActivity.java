@@ -6,13 +6,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +26,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -46,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     String Key_Preference = "LOGIN_PREFERENCE";
     CheckBox chkSaveLoginInfor;
+    Button btnLogin;
     MediaPlayer mediaPlayer;
     public static final String DATABASE_NAME = "BookStore.sqlite";
     public static final String DB_PATH_SUFFIX = "/databases/";
@@ -87,6 +94,34 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
             return false;
         }
+    }
+
+    BroadcastReceiver internetReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Toast.makeText(LoginActivity.this, "Internet Changed", Toast.LENGTH_SHORT).show();
+            ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+            if(networkInfo != null && networkInfo.isConnected()){
+              btnLogin.setEnabled(true);
+            }
+            else {
+                btnLogin.setEnabled(false);
+            }
+        }
+    };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(internetReceiver, filter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(internetReceiver);
     }
 
     @Override
@@ -151,6 +186,7 @@ public class LoginActivity extends AppCompatActivity {
         imgLogo = findViewById(R.id.imgLogo);
         registerForContextMenu(imgLogo);
         chkSaveLoginInfor=findViewById(R.id.chkSaveInfo);
+        btnLogin = findViewById(R.id.btnLogin);
     }
 
     public void exitApp(View view) {
@@ -200,10 +236,10 @@ public class LoginActivity extends AppCompatActivity {
 //            Intent intent=new Intent(LoginActivity.this, AdvancedListBookObjectActivity.class);
 //            Intent intent=new Intent(LoginActivity.this, PublisherBookActivity.class);
 //            Intent intent=new Intent(LoginActivity.this, PublisherBookSqliteActivity.class);
-            Intent intent=new Intent(LoginActivity.this, PublisherBookSqliteCRUDActivity.class);
+//            Intent intent=new Intent(LoginActivity.this, PublisherBookSqliteCRUDActivity.class);
 //            Intent intent=new Intent(LoginActivity.this, MyContactActivity.class);
-//              Intent intent=new Intent(LoginActivity.this, MyContactAdvancedActivity.class);
-
+//            Intent intent=new Intent(LoginActivity.this, MyContactAdvancedActivity.class);
+            Intent intent=new Intent(LoginActivity.this, MyContactMultiThreadActivity.class);
             startActivity(intent);
             Toast.makeText(LoginActivity.this, "Log in successfull!", Toast.LENGTH_SHORT).show();
             sharedPreferences=getSharedPreferences(Key_Preference, MODE_PRIVATE);
