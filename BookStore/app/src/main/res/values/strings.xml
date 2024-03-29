@@ -1,3 +1,19 @@
 <resources>
-    <string name="app_name">Nhà sách Phương Nam</string>
+    <string name="app_name">Phương Nam Book Store</string>
+    <string name="strUserName">Username:</string>
+    <string name="strTitleLogin">Login Admin BookStore</string>
+    <string name="strEnterUserName">Enter UserName</string>
+    <string name="strPassword">Password:</string>
+    <string name="strEnterPassword">Enter Password</string>
+    <string name="strSaveLoginInfo">Save login information</string>
+    <string name="strLogin">Login</string>
+    <string name="strClose">Close</string>
+    <string name="strCaptionLoginSuccessfully">Log in successfully!</string>
+    <string name="strCaptionLoginFail">Log in failed!</string>
+    <string name="strContentLoginFailed">Login failed, please check your account again</string>
+    <string name="strCaptionInternetChanged">Internet Changed</string>
+    <string name="strTitleDialogConfirmExit">Confirm Exit</string>
+    <string name="strMessageDialog">Are you sure want to exit?</string>
+    <string name="strYes">Yes</string>
+    <string name="strNo">No</string>
 </resources>

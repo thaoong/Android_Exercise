@@ -14,7 +14,7 @@
         android:layout_gravity="center"
         android:background="#673AB7"
         android:gravity="center"
-        android:text="Login Admin Bookstore"
+        android:text="@string/strTitleLogin"
         android:textColor="#FFFFFF"
         android:textSize="24sp" />
 
@@ -28,7 +28,7 @@
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Username:"
+        android:text="@string/strUserName"
         android:textSize="16sp" />
 
     <EditText
@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Enter UserName"
+        android:hint="@string/strEnterUserName"
         android:inputType="text"
         android:textSize="16sp" />
 
@@ -44,7 +44,7 @@
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Password:"
+        android:text="@string/strPassword"
         android:textSize="16sp" />
 
     <EditText
@@ -52,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Enter Password"
+        android:hint="@string/strEnterPassword"
         android:inputType="textPassword"
         android:textSize="16sp" />
 
@@ -60,7 +60,7 @@
         android:id="@+id/chkSaveInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save login information" />
+        android:text="@string/strSaveLoginInfo" />
 
     <TextView
         android:id="@+id/txtMessage"
@@ -77,16 +77,16 @@
         <Button
             android:id="@+id/btnLogin"
             android:layout_width="wrap_content"
-            android:onClick="openMainActivity"
             android:layout_height="wrap_content"
-            android:text="Login" />
+            android:onClick="openMainActivity"
+            android:text="@string/strLogin" />
 
         <Button
             android:id="@+id/btnClose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="exitApp"
-            android:text="Close" />
+            android:text="@string/strClose" />
 
     </LinearLayout>
 

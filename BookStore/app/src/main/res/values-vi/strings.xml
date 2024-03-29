@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Nhà sách Phương Nam</string>
+    <string name="strUserName">Tên đăng nhập:</string>
+    <string name="strTitleLogin">Đăng nhập quản trị Nhà sách</string>
+    <string name="strEnterUserName">Nhập tên đăng nhập</string>
+    <string name="strPassword">Mật khẩu:</string>
+    <string name="strEnterPassword">Nhập mật khẩu</string>
+    <string name="strSaveLoginInfo">Lưu thông tin đăng nhập</string>
+    <string name="strLogin">Đăng nhập</string>
+    <string name="strClose">Đóng</string>
+    <string name="strCaptionLoginSuccessfully">Đăng nhập thành công!</string>
+    <string name="strCaptionLoginFail">Đăng nhập thất bại!</string>
+    <string name="strContentLoginFailed">Đăng nhập thất bại, vui lòng kiểm tra lại tài khoản</string>
+    <string name="strCaptionInternetChanged">Internet thay đổi</string>
+    <string name="strTitleDialogConfirmExit">Xác nhận thoát</string>
+    <string name="strMessageDialog">Bạn có chắc muốn thoát chương trình?</string>
+    <string name="strYes">Có</string>
+    <string name="strNo">Không</string>
+</resources>

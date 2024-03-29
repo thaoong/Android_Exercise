@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".BookGalleryActivity">
+
+    <TextView
+        android:id="@+id/textView36"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Period" />
+
+    <EditText
+        android:id="@+id/edtPeriod"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        android:text="10" />
+
+    <CheckBox
+        android:id="@+id/chkAuto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Auto slide show!" />
+
+    <Button
+        android:id="@+id/btnLoadImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Load Image" />
+
+    <ImageView
+        android:id="@+id/imgImageFromInternet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_no_image" />
+</LinearLayout>

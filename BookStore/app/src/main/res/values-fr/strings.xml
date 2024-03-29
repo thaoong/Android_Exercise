@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Librairie de Phương Nam</string>
+    <string name="strUserName">Nom dutilisateur:</string>
+    <string name="strTitleLogin">Connexion Administrateur Librairie</string>
+    <string name="strEnterUserName">Saisissez votre nom dutilisateur</string>
+    <string name="strPassword">Mot de passe:</string>
+    <string name="strEnterPassword">Entrer le mot de passe</string>
+    <string name="strSaveLoginInfo">Enregistrer les informations de connexion</string>
+    <string name="strLogin">Se connecter</string>
+    <string name="strClose">Fermer</string>
+    <string name="strCaptionLoginSuccessfully">Connectez-vous avec succès!</string>
+    <string name="strCaptionLoginFail">La connexion a échoué!</string>
+    <string name="strContentLoginFailed">Échec de la connexion, veuillez vérifier à nouveau votre compte</string>
+    <string name="strCaptionInternetChanged">Internet modifié</string>
+    <string name="strTitleDialogConfirmExit">Confirmer la sortie</string>
+    <string name="strMessageDialog">Es tu sûr de vouloir partir?</string>
+    <string name="strYes">Oui</string>
+    <string name="strNo">Non</string>
+</resources>

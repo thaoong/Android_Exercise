@@ -99,7 +99,8 @@ public class LoginActivity extends AppCompatActivity {
     BroadcastReceiver internetReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Toast.makeText(LoginActivity.this, "Internet Changed", Toast.LENGTH_SHORT).show();
+            String internetChanged = getResources().getString(R.string.strCaptionInternetChanged);
+            Toast.makeText(LoginActivity.this, internetChanged, Toast.LENGTH_SHORT).show();
             ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
             if(networkInfo != null && networkInfo.isConnected()){
@@ -198,19 +199,23 @@ public class LoginActivity extends AppCompatActivity {
         //Create builder object
         AlertDialog.Builder builder=new AlertDialog.Builder(LoginActivity.this);
         //set title:
-        builder.setTitle("Confirm Exit");
+        String title =  getResources().getString(R.string.strTitleDialogConfirmExit);
+        builder.setTitle(title);
         //set message
-        builder.setMessage("Are you sure want to exit?");
+        String message = getResources().getString(R.string.strMessageDialog);
+        builder.setMessage(message);
         //set icon
         builder.setIcon(android.R.drawable.ic_dialog_alert);
         //set actions button for user interaction
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        String yes = getResources().getString(R.string.strYes);
+        builder.setPositiveButton(yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 finish();
             }
         });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        String no = getResources().getString(R.string.strNo);
+        builder.setNegativeButton(no, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -239,9 +244,14 @@ public class LoginActivity extends AppCompatActivity {
 //            Intent intent=new Intent(LoginActivity.this, PublisherBookSqliteCRUDActivity.class);
 //            Intent intent=new Intent(LoginActivity.this, MyContactActivity.class);
 //            Intent intent=new Intent(LoginActivity.this, MyContactAdvancedActivity.class);
-            Intent intent=new Intent(LoginActivity.this, MyContactMultiThreadActivity.class);
+//            Intent intent=new Intent(LoginActivity.this, MyContactMultiThreadActivity.class);
+//            Intent intent=new Intent(LoginActivity.this, BookMultiThreadActivity.class);
+//            Intent intent=new Intent(LoginActivity.this, NumberASyncTaskActivity.class);
+            Intent intent=new Intent(LoginActivity.this, BookGalleryActivity.class);
+//            Intent intent=new Intent(LoginActivity.this, DongABankActivity.class);
             startActivity(intent);
-            Toast.makeText(LoginActivity.this, "Log in successfull!", Toast.LENGTH_SHORT).show();
+            String loginSuccessfully = getResources().getString(R.string.strCaptionLoginSuccessfully);
+            Toast.makeText(LoginActivity.this, loginSuccessfully, Toast.LENGTH_SHORT).show();
             sharedPreferences=getSharedPreferences(Key_Preference, MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("USER_NAME", userName);
@@ -257,8 +267,10 @@ public class LoginActivity extends AppCompatActivity {
         else
         {
             //Alarm login failed
-            txtMessage.setText("Login failed, please check your account again");
-            Toast.makeText(LoginActivity.this, "Log in failed!", Toast.LENGTH_SHORT).show();
+            String contentLoginFailed = getResources().getString(R.string.strContentLoginFailed);
+            txtMessage.setText(contentLoginFailed);
+            String loginFailed = getResources().getString(R.string.strCaptionLoginFail);
+            Toast.makeText(LoginActivity.this, loginFailed, Toast.LENGTH_SHORT).show();
         }
     }
 
