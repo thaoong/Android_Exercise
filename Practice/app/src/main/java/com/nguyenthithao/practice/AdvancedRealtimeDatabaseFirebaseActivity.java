@@ -4,8 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,6 +29,31 @@ public class AdvancedRealtimeDatabaseFirebaseActivity extends AppCompatActivity 
         setContentView(R.layout.activity_advanced_realtime_database_firebase);
         addViews();
         getContactsFromFirebase();
+        addEvents();
+    }
+
+    private void addEvents() {
+        lvContact.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Contact contact = contactAdapter.getItem(position);
+                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = firebaseDatabase.getReference("contacts");
+                myRef.child(contact.getContactId()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(AdvancedRealtimeDatabaseFirebaseActivity.this, "Remove contact successfully", Toast.LENGTH_LONG).show();
+                        contactAdapter.remove(contact);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(AdvancedRealtimeDatabaseFirebaseActivity.this, "Error occurs: " + e.toString(), Toast.LENGTH_LONG).show();
+                    }
+                });
+                return false;
+            }
+        });
     }
 
     private void getContactsFromFirebase() {
@@ -43,7 +73,6 @@ public class AdvancedRealtimeDatabaseFirebaseActivity extends AppCompatActivity 
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
     }

@@ -35,7 +35,7 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
         Contact contact=getItem(position);
         txtId.setText(contact.getContactId());
         txtName.setText(contact.getName());
-        txtPhone.setText(Math.toIntExact(contact.getPhone()));
+        txtPhone.setText(contact.getPhone());
         txtEmail.setText(contact.getEmail());
         return custom;
     }

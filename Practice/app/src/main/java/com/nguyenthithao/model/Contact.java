@@ -3,13 +3,13 @@ package com.nguyenthithao.model;
 public class Contact {
     private String contactId;
     private String name;
-    private Long phone;
+    private String phone;
     private String email;
 
     public Contact() {
     }
 
-    public Contact(String contactId, String name, Long phone, String email) {
+    public Contact(String contactId, String name, String phone, String email) {
         this.contactId = contactId;
         this.name = name;
         this.phone = phone;
@@ -21,7 +21,7 @@ public class Contact {
         return contactId;
     }
 
-    public Long getPhone() {
+    public String getPhone() {
         return phone;
     }
 
@@ -37,7 +37,7 @@ public class Contact {
         this.name = name;
     }
 
-    public void setPhone(Long phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
