@@ -1,6 +1,7 @@
 package com.nguyenthithao.adapter;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.nguyenthithao.model.Song;
+import com.nguyenthithao.practice.KaraokeSqliteActivity;
 import com.nguyenthithao.practice.R;
 
 public class SongAdapter extends ArrayAdapter<Song> {
@@ -41,7 +43,7 @@ public class SongAdapter extends ArrayAdapter<Song> {
         if (song.getFavorite() == 1) {
             btnLike.setVisibility(View.GONE);
             btnDislike.setVisibility(View.VISIBLE);
-        } else {
+        } else if(song.getFavorite() == 0) {
             btnLike.setVisibility(View.VISIBLE);
             btnDislike.setVisibility(View.GONE);
         }
@@ -50,24 +52,34 @@ public class SongAdapter extends ArrayAdapter<Song> {
             @Override
             public void onClick(View v) {
                 likeProcess(song);
+                btnLike.setVisibility(View.GONE);
+                btnDislike.setVisibility(View.VISIBLE);
             }
         });
         btnDislike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dislikeProcess(song);
+                removeSong(position);
             }
         });
         return view;
     }
 
     private void dislikeProcess(Song song) {
-        song.setFavorite(1);
+        ContentValues row = new ContentValues();
+        row.put("favorite", 0);
+        KaraokeSqliteActivity.database.update("songs", row, "ma=?", new String[]{song.getMa()});
+    }
+
+    private void removeSong(int position) {
+        remove(getItem(position));
         notifyDataSetChanged();
     }
 
     private void likeProcess(Song song) {
-        song.setFavorite(0);
-        notifyDataSetChanged();
+        ContentValues row = new ContentValues();
+        row.put("favorite", 1);
+        KaraokeSqliteActivity.database.update("songs", row, "ma=?", new String[]{song.getMa()});
     }
 }

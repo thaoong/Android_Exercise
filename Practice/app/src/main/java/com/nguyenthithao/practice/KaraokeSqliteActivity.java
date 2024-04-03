@@ -75,6 +75,7 @@ public class KaraokeSqliteActivity extends AppCompatActivity {
         addViews();
         copyDataBase();
         addEvents();
+        loadAllSong();
     }
 
     private void addEvents() {
@@ -92,10 +93,28 @@ public class KaraokeSqliteActivity extends AppCompatActivity {
     }
 
     private void loadFavoriteSong() {
-
+        favoriteSongAdapter.clear();
+        database = openOrCreateDatabase(DATABASE_NAME,
+                MODE_PRIVATE, null);
+        Cursor cursor = database.rawQuery("SELECT * FROM songs WHERE favorite=1", null);
+        while(cursor.moveToNext()){
+            String ma = cursor.getString(0);
+            String tenbaihat = cursor.getString(1);
+            String tacgia = cursor.getString(3);
+            int favorite = cursor.getInt(5);
+            Song song = new Song();
+            song.setMa(ma);
+            song.setTenbaihat(tenbaihat);
+            song.setTacgia(tacgia);
+            song.setFavorite(favorite);
+            favoriteSongAdapter.add(song);
+        }
+        cursor.close();
+        favoriteSongAdapter.notifyDataSetChanged();
     }
 
     private void loadAllSong() {
+        allSongAdapter.clear();
         database = openOrCreateDatabase(DATABASE_NAME,
                 MODE_PRIVATE, null);
         Cursor cursor = database.rawQuery("SELECT * FROM songs", null);
@@ -104,10 +123,15 @@ public class KaraokeSqliteActivity extends AppCompatActivity {
             String tenbaihat = cursor.getString(1);
             String tacgia = cursor.getString(3);
             int favorite = cursor.getInt(5);
-            Song song = new Song(ma, tenbaihat, tacgia, favorite);
+            Song song = new Song();
+            song.setMa(ma);
+            song.setTenbaihat(tenbaihat);
+            song.setTacgia(tacgia);
+            song.setFavorite(favorite);
             allSongAdapter.add(song);
         }
         cursor.close();
+        allSongAdapter.notifyDataSetChanged();
     }
 
     private void addViews() {
