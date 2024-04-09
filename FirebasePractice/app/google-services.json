@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "602153337201",
+    "project_id": "my-application-fe977",
+    "storage_bucket": "my-application-fe977.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:602153337201:android:25f23172e06dff061a76d0",
+        "android_client_info": {
+          "package_name": "com.nguyenthithao.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlKQmypDUs5xAzq5lpRiHGST9syG4Jleo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
